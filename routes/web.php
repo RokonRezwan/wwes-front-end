@@ -19,4 +19,7 @@ Route::get('/', function () {
 
 Auth::routes();
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::get('/home', function(){
+    $products = Http::get('http://127.0.0.1:8000/api/products')->json();
+    return view('home', ['products'=>$products['product']]);
+});
