@@ -1,7 +1,6 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container mt-5 mb-5">
     <div class="d-flex justify-content-center row">
           <div class="col-12">
             <a href="{{ route('welcome') }}" class="btn btn-primary btn-sm float-right" style="color: white" >Back</a>
@@ -43,5 +42,4 @@
             </div>
         </div>
     </div>
-</div>
 @endsection
