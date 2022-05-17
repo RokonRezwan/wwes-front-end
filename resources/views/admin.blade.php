@@ -2,7 +2,7 @@
 
 @section('content')
 <div class="container mt-5 mb-5">
-    <div class="d-flex justify-content-center row">
+    {{-- <div class="d-flex justify-content-center row">
         <div class="col-md-10">
             @foreach ($products as $product)
             <div class="row p-2 bg-white border rounded">
@@ -29,19 +29,20 @@
                 </div>
 
                 <div class="align-items-center align-content-center col-md-3 border-left mt-1">
-                    <div style="font-size: 15px">
+                    <div class="d-flex flex-row align-items-center">
                         @foreach ($product['prices'] as $price)
-                        <div class="mr-1">{{ $price['price_types']['name'] }} : ৳{{ $price['amount'] }}</div>
+                        <h4 class="mr-1">৳{{ $price['amount'] }}</h4>
                         @endforeach
+                        <span class="strike-text">৳{{ 20.99 }}</span>
                     </div>
                     <div class="d-flex flex-column mt-4">
-                        <a href="{{ route('products.details', $product['id']) }}" class="btn btn-primary btn-sm" style="color: white" >Details</a>
+                        <button class="btn btn-primary btn-sm" type="button">Details</button>
                         <button class="btn btn-outline-primary btn-sm mt-2" type="button">Add to Cart</button>
                     </div>
                 </div>
             </div>
             @endforeach
         </div>
-    </div>
+    </div> --}}
 </div>
 @endsection

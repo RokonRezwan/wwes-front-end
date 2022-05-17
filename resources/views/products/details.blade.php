@@ -3,8 +3,10 @@
 @section('content')
 <div class="container mt-5 mb-5">
     <div class="d-flex justify-content-center row">
+          <div class="col-12">
+            <a href="{{ route('welcome') }}" class="btn btn-primary btn-sm float-right" style="color: white" >Back</a>
+          </div>
         <div class="col-md-10">
-            @foreach ($products as $product)
             <div class="row p-2 bg-white border rounded">
                 <div class="col-md-3 mt-1">
                     <img class="img-fluid img-responsive rounded product-image" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTp32-7-N_QRqnJOon_ft0tGNXt0gH-KaOKrQ&usqp=CAU">
@@ -29,19 +31,16 @@
                 </div>
 
                 <div class="align-items-center align-content-center col-md-3 border-left mt-1">
-                    <div class="d-flex flex-row align-items-center">
+                    <div style="font-size: 15px">
                         @foreach ($product['prices'] as $price)
-                        <h4 class="mr-1">৳{{ $price['amount'] }}</h4>
+                        <div class="mr-1">{{ $price['price_types']['name'] }} : ৳{{ $price['amount'] }}</div>
                         @endforeach
-                        <span class="strike-text">৳{{ 20.99 }}</span>
                     </div>
                     <div class="d-flex flex-column mt-4">
-                        <button class="btn btn-primary btn-sm" type="button">Details</button>
                         <button class="btn btn-outline-primary btn-sm mt-2" type="button">Add to Cart</button>
                     </div>
                 </div>
             </div>
-            @endforeach
         </div>
     </div>
 </div>
