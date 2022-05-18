@@ -1,45 +1,77 @@
 @extends('layouts.app')
 
+@section('title','Show Product')
+
 @section('content')
-    <div class="d-flex justify-content-center row">
-          <div class="col-12">
-            <a href="{{ route('welcome') }}" class="btn btn-primary btn-sm float-right" style="color: white" >Back</a>
-          </div>
-        <div class="col-md-10">
-            <div class="row p-2 bg-white border rounded">
-                <div class="col-md-3 mt-1">
-                    <img class="img-fluid img-responsive rounded product-image" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTp32-7-N_QRqnJOon_ft0tGNXt0gH-KaOKrQ&usqp=CAU">
-                </div>
+    <div class="row justify-content-center">
+        <div class="col-md-12  w-75">
 
-                <div class="col-md-6 mt-1">
-                    <h5>{{ $product['name'] }}</h5>
-                    <div class="d-flex flex-row">
-                        <div class="ratings mr-2">
-                            <i class="fa fa-star"></i>
-                            <i class="fa fa-star"></i>
-                            <i class="fa fa-star"></i>
-                            <i class="fa fa-star"></i>
-                            <i class="fa fa-star"></i>
-                        </div>
-                    </div>
-                    <div class="mt-1 mb-1 spec-1">
-                        <span class="dot"></span>
-                        <span>{{ $product['category']['name'] }}</span>
-                    </div>
-                    <p class="text-justify text-truncate para mb-0">{{ $product['description'] }}<br><br></p>
-                </div>
-
-                <div class="align-items-center align-content-center col-md-3 border-left mt-1">
-                    <div style="font-size: 15px">
-                        @foreach ($product['prices'] as $price)
-                        <div class="mr-1">{{ $price['price_types']['name'] }} : ৳{{ $price['amount'] }}</div>
-                        @endforeach
-                    </div>
-                    <div class="d-flex flex-column mt-4">
-                        <button class="btn btn-outline-primary btn-sm mt-2" type="button">Add to Cart</button>
-                    </div>
+            <div class="row justify-content-center my-3 g-0">
+                <div class="col-12 text-end">
+                    <a href="{{ route('products.index') }}" class="btn btn-primary">Back</a>
                 </div>
             </div>
+
+            <div class="card">
+                <div class="card-header"><h3>Show Product Details</h3></div>
+
+                <div class="card-body">
+                    <div class="row p-1">
+                        <div class="col-2">
+                            <strong>Name :</strong>
+                        </div>
+                        <div class="col-10">
+                            {{ $product['name'] }}
+                        </div>
+                    </div>
+
+                    <div class="row p-1">
+                        <div class="col-2">
+                            <strong>Category Name :</strong>
+                        </div>
+                        <div class="col-10">
+                            {{ $product['category']['name'] }}
+                        </div>
+                    </div>
+
+                    <div class="row p-1">
+                        <div class="col-2">
+                            <strong>Prices :</strong>
+                        </div>
+                        <div class="col-10">
+                            @foreach ($product['prices'] as $price)
+                            <div>{{ $price['price_types']['name'] }} : <strong>৳ {{ $price['amount'] }}</strong></div>
+                            @endforeach
+                        </div>
+                    </div>
+
+                    <div class="row p-1">
+                        <div class="col-2">
+                            <strong>Description :</strong>
+                        </div>
+                        <div class="col-10">
+                            {{ $product['description'] }}
+                        </div>
+                    </div>
+
+                    <div class="row p-1">
+                        <div class="col-3">
+                            <strong>Image :</strong>
+                        </div>
+                        <div class="col-9">
+                            <img class="img-fluid img-responsive rounded product-image" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTp32-7-N_QRqnJOon_ft0tGNXt0gH-KaOKrQ&usqp=CAU">
+                        </div>
+                            
+                            {{-- @if ($product->image && (file_exists(public_path('product-images/'. $product->image ))))
+                                <img src="{{ asset('product-images/'.$product->image) }}" height="150" width="250">
+                            @else
+                                <small>No Image</small>
+                            @endif --}}
+                        </div>
+                    </div>
+
+                </div>
+            </div>  <!-- /.card -->
         </div>
     </div>
 @endsection
