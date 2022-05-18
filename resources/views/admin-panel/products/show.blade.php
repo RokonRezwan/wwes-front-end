@@ -8,7 +8,7 @@
 
             <div class="row justify-content-center my-3 g-0">
                 <div class="col-12 text-end">
-                    <a href="{{ route('products.index') }}" class="btn btn-primary">Back to Home</a>
+                    <a href="{{ route('products.index') }}" class="btn btn-primary">Back</a>
                 </div>
             </div>
 
@@ -17,43 +17,45 @@
 
                 <div class="card-body">
                     <div class="row p-1">
-                        <div class="col-3">
+                        <div class="col-2">
                             <strong>Name :</strong>
                         </div>
-                        <div class="col-9">
-                            {{ $product->name }}
+                        <div class="col-10">
+                            {{ $product['name'] }}
                         </div>
                     </div>
 
                     <div class="row p-1">
-                        <div class="col-3">
+                        <div class="col-2">
                             <strong>Category Name :</strong>
                         </div>
-                        <div class="col-9">
-                            {{ optional($product->category)->category_name }}
+                        <div class="col-10">
+                            {{ $product['category']['name'] }}
                         </div>
                     </div>
 
                     <div class="row p-1">
-                        <div class="col-3">
-                            <strong>Price :</strong>
+                        <div class="col-2">
+                            <strong>Prices :</strong>
                         </div>
-                        <div class="col-9">
-                            {{ $product->price }}
+                        <div class="col-10">
+                            @foreach ($product['prices'] as $price)
+                            <div>{{ $price['price_types']['name'] }} : <strong>৳ {{ $price['amount'] }}</strong></div>
+                            @endforeach
                         </div>
                     </div>
 
                     <div class="row p-1">
-                        <div class="col-3">
+                        <div class="col-2">
                             <strong>Description :</strong>
                         </div>
-                        <div class="col-9">
-                            {{ $product->description }}
+                        <div class="col-10">
+                            {{ $product['description'] }}
                         </div>
                     </div>
 
                     <div class="row p-1">
-                        <div class="col-3">
+                        {{-- <div class="col-3">
                             <strong>Image :</strong>
                         </div>
                         <div class="col-9">
@@ -62,7 +64,7 @@
                             @else
                                 <small>No Image</small>
                             @endif
-                        </div>
+                        </div> --}}
                     </div>
 
                 </div>

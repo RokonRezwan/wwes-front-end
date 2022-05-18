@@ -10,13 +10,13 @@
             <div class="row justify-content-center my-3 g-0">
                 <div class="col-12 text-end">
                     <a class="btn btn-primary" href="{{ route('dashboard') }}">Back</a>
-                    <a class="btn btn-primary" href="{{ route('products.create') }}">Add Product</a>
+                    <a class="btn btn-primary" href="{{ route('priceTypes.create') }}">Add Price Type</a>
                 </div>
             </div>
 
             <div class="card">
                 <div class="card-header">
-                    <h5>Products List</h5>
+                    <h5>Price Type List</h5>
                 </div>
                 <div class="card-body">
 
@@ -34,31 +34,25 @@
                                 <tr>
                                     <th>SL</th>
                                     <th>Name</th>
-                                    <th class="text-center no-sort">Category</th>
-                                    <th class="text-center no-sort">Prices</th>
                                     <th class="text-center no-sort">Status</th>
                                     <th class="text-center no-sort">Action</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach ($products as $key => $product)
+                                @foreach ($priceTypes as $key => $priceType)
                                     <tr>
-                                        <td>{{ $key++ }}</td>
-                                        <td>{{ $product['name'] }}</td>
-                                        <td class="text-center">
-                                            {{ $product['category']['name'] }}
+                                        <td>
+                                            {{ $key++ }}
                                         </td>
-                                        <td class="text-center">
-                                            @foreach ($product['prices'] as $price)
-                                            <div>{{ $price['price_types']['name'] }} : <strong>৳ {{ $price['amount'] }}</strong></div> 
-                                            @endforeach
+                                        <td>
+                                            {{ $priceType['name'] }}
                                         </td>
                                         <td class="text-center">
                                             <form action="" method="post">
                                             @csrf
                                             @method('GET')
 
-                                                @if ($product['is_active'] == 1)
+                                                @if ($priceType['is_active'] == 1)
                                                     <button type="submit" class="btn btn-success">Active</button>
                                                 @else
                                                     <button type="submit" class="btn btn-danger">Inactive</button>
@@ -68,18 +62,18 @@
                                         </td>
                                         <td class="text-center">
                                             <div class="btn-group" role="group">
-                                                 <a href="{{ route('products.show', $product['id']) }}" 
+                                                 <a href="{{ route('priceTypes.show', $priceType['id']) }}" 
                                                     class="btn btn-primary me-1"><i class="fa fa-eye"></i></a>
 
-                                                <a href="{{ route('products.edit', $product['id']) }}"
+                                                <a href="{{ route('priceTypes.edit', $priceType['id']) }}"
                                                     class="btn btn-info me-1"><i class="fa fa-edit"></i></a>
 
-                                                <form action="http://127.0.0.1:8000/api/products/{{ $product['id'] }}" method="post">
+                                                <form action="http://127.0.0.1:8000/api/price-types/{{ $priceType['id'] }}" method="post">
                                                     @csrf
                                                     @method('DELETE')
 
                                                     <button type="submit" class="btn btn-danger"
-                                                        onclick="return confirm('Are you sure you want to delete this product ?')"><i
+                                                        onclick="return confirm('Are you sure you want to delete this Price Type ?')"><i
                                                             class="fa fa-trash"></i></button>
                                                 </form>
 

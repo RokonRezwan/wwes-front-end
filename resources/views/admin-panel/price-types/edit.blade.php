@@ -8,18 +8,18 @@
 
             <div class="row justify-content-center my-3 g-0">
                 <div class="col-12 text-end">
-                    <a href="{{ route('categories.index') }}" class="btn btn-primary">Back</a>
+                    <a href="{{ route('priceTypes.index') }}" class="btn btn-primary">Back</a>
                 </div>
             </div>
 
-            <form method="post" action="http://127.0.0.1:8000/api/categories/{{ $category['id'] }}" enctype="multipart/form-data">
+            <form method="post" action="http://127.0.0.1:8000/api/price-types/{{ $priceType['id'] }}" enctype="multipart/form-data">
                 @csrf
                 @method('PATCH')
 
                 <div class="card">
 
                     <div class="card-header">
-                        <h4 class="card-title">Update Category</h4>
+                        <h4 class="card-title">Update Price Type</h4>
                     </div>
 
                     <div class="card-body" >
@@ -39,13 +39,13 @@
                         <div class="row p-2">
                             <label for="name" class="col-md-2 col-form-label">Name <b class="text-danger">*</b></label>
                             <div class="col-md-10">
-                                <input type="text" id="name" class="form-control" value="{{ $category['name'] }}"
-                                    name="name" placeholder="Enter Category name" required autofocus>
+                                <input type="text" id="name" class="form-control" value="{{ $priceType['name'] }}"
+                                    name="name" placeholder="Enter Price Type name" required autofocus>
                             </div>
                         </div>
 
                         <div class="card-footer float-end">
-                            <button type="submit" class="btn btn-primary">Update Product</button>
+                            <button type="submit" class="btn btn-primary">Update Price Type</button>
                         </div>
                     </div>
                 </div> <!-- /.card -->

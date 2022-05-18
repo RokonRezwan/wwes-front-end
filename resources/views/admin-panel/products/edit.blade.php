@@ -8,7 +8,7 @@
 
             <div class="row justify-content-center my-3 g-0">
                 <div class="col-12 text-end">
-                    <a href="{{ route('products.index') }}" class="btn btn-primary">Back to Home</a>
+                    <a href="{{ route('products.index') }}" class="btn btn-primary">Back</a>
                 </div>
             </div>
 
@@ -59,30 +59,59 @@
                             </div>
                         </div>
 
-                        <div class="row p-2">
+                        <div class="row prices p-2">
                             <label for="price" class="col-md-2 col-form-label">Price</label>
                             <div class="col-md-10">
-                                @foreach ($product['prices'] as $price)
-                                            <div>{{ $price['price_types']['name'] }} : <strong>৳ {{ $price['amount'] }}</strong></div> 
-                                            @endforeach
-                                {{-- <input type="number" id="price" class="form-control" value="{{ $product['price'] }}"
-                                    name="price" placeholder="Enter Product price"> --}}
+
+                                @forelse ($product['prices'] as $price)
+                                    <input type="hidden" value="{{ $price['id'] }}" name="product_price_id[]" />
+
+                                    <div class="row col-md-10" style="margin-bottom: 5px">
+                                        <div class="col-md-4 col-12 g-0" style="padding-right:5px!important">
+                                            <select class="form-select" name="price_type_id[]" id="price_type_id">
+                                                <option value="" selected>Select Price Type</option>
+                                                @foreach ($priceTypes as $ptype)
+                                                <option value="{{ $ptype['id'] }}" @if ($ptype['id'] == $price['price_types']['id']) selected @endif>{{ $ptype['name'] }}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+        
+                                        <div class="col-12 col-md-4 g-0" style="padding-right:5px!important">
+                                            <input type="number" min="0" class="form-control" name="amount[]" id="amount" placeholder="Price"
+                                                    value="{{ $price['amount'] }}">
+                                        </div>
+        
+                                        <div class="col-12 col-md-4 d-flex align-items-end g-0">
+                                            <a href="javascript:void(0)" class="btn btn-success addMore"><span class="glyphicon glyphicon glyphicon-plus"
+                                                    aria-hidden="true"></span> Add More</a>
+                                        </div>
+        
+                                    </div>
+                                @empty
+                                    <div class="row col-md-10" style="margin-bottom: 5px">
+                                        <div class="col-md-4 col-12 g-0" style="padding-right:5px!important">
+                                            <select class="form-select" name="price_type_id[]" id="price_type_id">
+                                                <option value="" selected>Select Price Type</option>
+                                                @foreach ($priceTypes as $ptype)
+                                                <option value="{{ $ptype['id'] }}">{{ $ptype['name'] }}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+        
+                                        <div class="col-12 col-md-4 g-0" style="padding-right:5px!important">
+                                            <input type="number" min="0" class="form-control" name="amount[]" id="amount" placeholder="Price"
+                                                    value="{{ old('amount[]') }}">
+                                        </div>
+        
+                                        <div class="col-12 col-md-4 d-flex align-items-end g-0">
+                                            <a href="javascript:void(0)" class="btn btn-success addMore"><span class="glyphicon glyphicon glyphicon-plus"
+                                                    aria-hidden="true"></span> Add More</a>
+                                        </div>
+        
+                                    </div>
+                                @endforelse
                             </div>
                         </div>
-{{-- 
-                        <div class="row p-2">
-                            <label for="image" class="col-md-2 col-form-label">Image</label>
-                            <div class="col-md-8">
-                                <input type="file" id="image" class="form-control" value="{{ old('image') }}"
-                                    name="image" accept="image/*">
-                            </div>
-                            <div class="col-md-2">
-                                @if ($product->image && file_exists(public_path('product-images/' . $product->image)))
-                                    <img src="{{ asset('product-images/' . $product->image) }}"
-                                        alt="{{ $product->title }}" height="40" width="45">
-                                @endif
-                            </div>
-                        </div> --}}
 
                         <div class="row p-2">
                             <label for="description" class="col-md-2 col-form-label">Description</label>
@@ -100,4 +129,48 @@
             </form>
         </div>
     </div>
+
+        <!-- For Add New Input Row -->
+        <div class="row pricesCopy p-3" style="display: none;">
+            <label for="category" class="col-md-2 col-form-label"></label>
+            <div class="row col-md-10">
+                <div class="col-md-4 col-12 g-0" style="padding-right:5px!important">
+                    <select class="form-select" name="price_type_id[]" id="price_type_id">
+                        <option value="" selected>Select Price Type</option>
+                        @foreach ($priceTypes as $ptype)
+                        <option value="{{ $ptype['id'] }}">{{ $ptype['name'] }}</option>
+                        @endforeach
+                    </select>
+                </div>
+    
+                <div class="col-12 col-md-4 g-0" style="padding-right:5px!important">
+                    <input type="number" min="0" class="form-control" name="amount[]" id="amount" placeholder="Price"
+                            value="{{ old('amount[]') }}">
+                </div>
+    
+                <div class="col-md-2 col-12 d-flex align-items-end g-0">
+                    <a href="javascript:void(0)" class="btn btn-danger remove"><span class="glyphicon glyphicon glyphicon-remove"
+                            aria-hidden="true"></span> Remove</a>
+                </div>
+    
+            </div>
+        </div>
 @endsection
+
+@push('scripts')
+    <script type="text/javascript">
+        // Upload Image Preview
+        $(document).ready(function (e) {
+            //add more fields group
+            $(".addMore").click(function(){
+                    var fieldHTML='<div class="row prices p-3" style="margin-top:5px!important">'
+                    +$(".pricesCopy").html()+'</div>';
+                    $('body').find('.prices:last').after(fieldHTML);
+                });
+            //remove fields group
+            $("body").on("click",".remove",function(){
+                    $(this).parents(".prices").remove();
+                });
+        });
+    </script>
+@endpush

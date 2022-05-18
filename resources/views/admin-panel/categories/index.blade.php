@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'All Categories')
+@section('title', 'All Products')
 
 @section('content')
 
@@ -9,12 +9,15 @@
 
             <div class="row justify-content-center my-3 g-0">
                 <div class="col-12 text-end">
-                    <a class="btn btn-primary" href="{{ route('categories.create') }}">Add New Category</a>
+                    <a class="btn btn-primary" href="{{ route('dashboard') }}">Back</a>
+                    <a class="btn btn-primary" href="{{ route('categories.create') }}">Add Category</a>
                 </div>
             </div>
 
             <div class="card">
-                <div class="card-header"><h5>List of All Categories</h5></div>
+                <div class="card-header">
+                    <h5>Categories List</h5>
+                </div>
                 <div class="card-body">
 
                     @if (session('status'))
@@ -25,65 +28,52 @@
                         </div>
                     @endif
 
-                    @if ($errors->any())
-                    <div class="row">
-                        <div class="col-12 alert alert-danger p-1 m-0">
-                            <ul class="g-0">
-                                @foreach ($errors->all() as $error)
-                                    <li>{{ $error }}</li>
-                                @endforeach
-                            </ul>
-                        </div>
-                    </div>
-                    @endif
-
                     <div class="table-responsive">
-                        <table id="datatable" class="table table-bordered dt-responsive nowrap table-striped">
+                        <table id="datatable" class="table table-bordered dt-responsive nowrap">
                             <thead>
                                 <tr>
-                                </tr>
-                                    <th class="text-center">SL</th>
+                                    <th>SL</th>
                                     <th>Name</th>
-                                    <th class="text-center no-sort">Active Status</th>
+                                    <th class="text-center no-sort">Status</th>
                                     <th class="text-center no-sort">Action</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 @foreach ($categories as $key => $category)
                                     <tr>
-                                        <td class="text-center">{{ ++$key }}</td>
-                                        <td>{{ $category->category_name }}</td>
+                                        <td>
+                                            {{ $key++ }}
+                                        </td>
+                                        <td>
+                                            {{ $category['name'] }}
+                                        </td>
                                         <td class="text-center">
+                                            <form action="" method="post">
+                                            @csrf
+                                            @method('GET')
 
-                                            @if ($category->is_active == 1)
-                                                <form action="{{ route('categories.changeStatus', $category->id) }}"
-                                                    method="post">
-                                                    @csrf
-                                                    @method('GET')
-
+                                                @if ($category['is_active'] == 1)
                                                     <button type="submit" class="btn btn-success">Active</button>
-                                                </form>
-                                            @else
-                                                <form action="{{ route('categories.changeStatus', $category->id) }}"
-                                                    method="post">
-                                                    @csrf
-                                                    @method('GET')
-
+                                                @else
                                                     <button type="submit" class="btn btn-danger">Inactive</button>
-                                                </form>
-                                            @endif
+                                                @endif
 
+                                            </form>
                                         </td>
                                         <td class="text-center">
                                             <div class="btn-group" role="group">
-                                                <a href="{{ route('categories.edit', $category->id) }}"
+                                                 <a href="{{ route('categories.show', $category['id']) }}" 
+                                                    class="btn btn-primary me-1"><i class="fa fa-eye"></i></a>
+
+                                                <a href="{{ route('categories.edit', $category['id']) }}"
                                                     class="btn btn-info me-1"><i class="fa fa-edit"></i></a>
 
-                                                <form action="{{ route('categories.destroy', $category->id) }}" method="post">
+                                                <form action="http://127.0.0.1:8000/api/categories/{{ $category['id'] }}" method="post">
                                                     @csrf
                                                     @method('DELETE')
 
-                                                    <button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure want to delete this category ?')"><i
+                                                    <button type="submit" class="btn btn-danger"
+                                                        onclick="return confirm('Are you sure you want to delete this Category ?')"><i
                                                             class="fa fa-trash"></i></button>
                                                 </form>
 
@@ -101,15 +91,16 @@
 @endsection
 
 @push('scripts')
-<script type="text/javascript">
-    $(document).ready(function() {
-        $('#datatable').DataTable({
-            responsive: true,
-            columnDefs: [{
-                targets: 'no-sort',
-                orderable: false
-            }],
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $('#datatable').DataTable({
+                order: [0,'desc'],
+                responsive: true,
+                columnDefs: [{
+                    targets: 'no-sort',
+                    orderable: false
+                }],
+            });
         });
-    });
-</script>
+    </script>
 @endpush

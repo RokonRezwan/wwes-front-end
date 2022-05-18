@@ -20,19 +20,71 @@ Route::get('/home', function(){
 })->name('dashboard');
 
 /* Products */
-Route::get('/products/index', function(){
-    $products = Http::get('http://127.0.0.1:8000/api/products/')->json();
-    return view('admin-panel.products.index', ['products'=>$products['product']]);
-})->name('products.index');
+Route::prefix('products')->as('products.')->group(function () {
+    Route::get('/index', function(){
+        $products = Http::get('http://127.0.0.1:8000/api/products/')->json();
+        return view('admin-panel.products.index', ['products'=>$products['product']]);
+    })->name('index');
 
-Route::get('/products/create', function(){
-    $categories = Http::get('http://127.0.0.1:8000/api/categories/')->json();
-    return view('admin-panel.products.create', ['categories'=>$categories['categories']]);
-})->name('products.create');
+    Route::get('/create', function(){
+        $categories = Http::get('http://127.0.0.1:8000/api/categories/')->json();
+        $priceTypes = Http::get('http://127.0.0.1:8000/api/price-types/')->json();
+        return view('admin-panel.products.create', ['categories'=>$categories['categories'], 'priceTypes'=>$priceTypes['priceTypes']]);
+    })->name('create');
 
-Route::get('/products/edit/{id}', function($id){
-    $categories = Http::get('http://127.0.0.1:8000/api/categories/')->json();
-    $product = Http::get('http://127.0.0.1:8000/api/products/'.$id)->json();
-    return view('admin-panel.products.edit', ['categories'=>$categories['categories'], 'product'=>$product['product']]);
+    Route::get('/edit/{id}', function($id){
+        $categories = Http::get('http://127.0.0.1:8000/api/categories/')->json();
+        $product = Http::get('http://127.0.0.1:8000/api/products/'.$id)->json();
+        $priceTypes = Http::get('http://127.0.0.1:8000/api/price-types/')->json();
+        return view('admin-panel.products.edit', ['categories'=>$categories['categories'], 'priceTypes'=>$priceTypes['priceTypes'], 'product'=>$product['product']]);
+    })->name('edit');
 
-})->name('products.edit');
+    Route::get('/show/{id}', function($id){
+        $product = Http::get('http://127.0.0.1:8000/api/products/'.$id)->json();
+        return view('admin-panel.products.show', ['product'=>$product['product']]);
+    })->name('show');
+});
+
+/* Categories */
+Route::prefix('categories')->as('categories.')->group(function () {
+    Route::get('/index', function(){
+        $categories = Http::get('http://127.0.0.1:8000/api/categories/')->json();
+        return view('admin-panel.categories.index', ['categories'=>$categories['categories']]);
+    })->name('index');
+
+    Route::get('/create', function(){
+        return view('admin-panel.categories.create');
+    })->name('create');
+
+    Route::get('/edit/{id}', function($id){
+        $category = Http::get('http://127.0.0.1:8000/api/categories/'.$id)->json();
+        return view('admin-panel.categories.edit', ['category'=>$category['category']]);
+    })->name('edit');
+
+    Route::get('/show/{id}', function($id){
+        $category = Http::get('http://127.0.0.1:8000/api/categories/'.$id)->json();
+        return view('admin-panel.categories.show', ['category'=>$category['category']]);
+    })->name('show');
+});
+
+/* Price Types */
+Route::prefix('price-types')->as('priceTypes.')->group(function () {
+    Route::get('/index', function(){
+        $priceTypes = Http::get('http://127.0.0.1:8000/api/price-types/')->json();
+        return view('admin-panel.price-types.index', ['priceTypes'=>$priceTypes['priceTypes']]);
+    })->name('index');
+
+    Route::get('/create', function(){
+        return view('admin-panel.price-types.create');
+    })->name('create');
+
+    Route::get('/edit/{id}', function($id){
+        $priceType = Http::get('http://127.0.0.1:8000/api/price-types/'.$id)->json();
+        return view('admin-panel.price-types.edit', ['priceType'=>$priceType['priceType']]);
+    })->name('edit');
+
+    Route::get('/show/{id}', function($id){
+        $priceType = Http::get('http://127.0.0.1:8000/api/price-types/'.$id)->json();
+        return view('admin-panel.price-types.show', ['priceType'=>$priceType['priceType']]);
+    })->name('show');
+});

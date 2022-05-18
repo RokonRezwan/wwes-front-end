@@ -1,6 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-    <a href="{{ route('products.index') }}">Product Index</a>
-    <a href="{{ route('products.create') }}">Create Product</a>
+    <div><a href="{{ route('products.index') }}">Product Index</a></div>
+    <div><a href="{{ route('categories.index') }}">Category Index</a></div>
+    <div><a href="{{ route('priceTypes.index') }}">Price Types Index</a></div>
 @endsection
