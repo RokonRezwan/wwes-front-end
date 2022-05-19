@@ -8,7 +8,11 @@
             @foreach ($products as $product)
                 <div class="row p-2 bg-white border rounded">
                  <div class="col-md-3 mt-1">
-                     <img class="img-fluid img-responsive rounded product-image" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTp32-7-N_QRqnJOon_ft0tGNXt0gH-KaOKrQ&usqp=CAU">
+                     @if ($product['image'])
+                        <img class="img-fluid img-responsive rounded product-image" src="http://127.0.0.1:8000/product-images/{{ $product['image'] }}" height="100" width="200">                                                
+                    @else
+                        <small>No Image</small>
+                    @endif
                  </div>
                 
                  <div class="col-md-6 mt-1">

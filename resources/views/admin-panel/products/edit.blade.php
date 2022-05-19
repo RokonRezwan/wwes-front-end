@@ -59,6 +59,14 @@
                             </div>
                         </div>
 
+                        <div class="row p-2">
+                            <label for="image" class="col-md-2 col-form-label">Image</label>
+                            <div class="col-md-10">
+                                <input type="file" id="image" class="form-control" value="{{ old('image') }}"
+                                    name="image" accept="image/*">                                
+                            </div>
+                        </div>
+                        
                         <div class="row prices p-2">
                             <label for="price" class="col-md-2 col-form-label">Price</label>
                             <div class="col-md-10">

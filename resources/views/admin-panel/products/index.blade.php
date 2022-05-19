@@ -35,6 +35,7 @@
                                     <th>SL</th>
                                     <th>Name</th>
                                     <th class="text-center no-sort">Category</th>
+                                    <th class="text-center no-sort">Image</th>
                                     <th class="text-center no-sort">Prices</th>
                                     <th class="text-center no-sort">Status</th>
                                     <th class="text-center no-sort">Action</th>
@@ -47,6 +48,14 @@
                                         <td>{{ $product['name'] }}</td>
                                         <td class="text-center">
                                             {{ $product['category']['name'] }}
+                                        </td>
+                                        <td>
+                                            @if ($product['image'])
+                                            <img src="http://127.0.0.1:8000/product-images/{{ $product['image'] }}"
+                                            height="25" width="40">                                                
+                                            @else
+                                                <small>No Image</small>
+                                            @endif
                                         </td>
                                         <td class="text-center">
                                             @foreach ($product['prices'] as $price)
