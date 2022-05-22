@@ -60,14 +60,13 @@
                         </div>
                         <div class="col-9">                            
                             @if ($product['image'])
-                                <img src="http://127.0.0.1:8000/product-images/{{ $product['image'] }}"
+                                <img src="{{ config('app.backend_url') }}/product-images/{{ $product['image'] }}"
                                 height="300" width="500">                                                
                             @else
                                 <small>No Image</small>
                             @endif
                         </div>
                     </div>
-
                 </div>
             </div>  <!-- /.card -->
         </div>

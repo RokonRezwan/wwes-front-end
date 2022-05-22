@@ -39,16 +39,19 @@
                                 </tr>
                             </thead>
                             <tbody>
+                                @php
+                                    $sl =1;
+                                @endphp
                                 @foreach ($categories as $key => $category)
                                     <tr>
                                         <td>
-                                            {{ $key++ }}
+                                            {{ $sl++ }}
                                         </td>
                                         <td>
                                             {{ $category['name'] }}
                                         </td>
                                         <td class="text-center">
-                                            <form action="" method="post">
+                                            <form action="{{ config('app.backend_url') }}/api/categories/toggle-status/{{ $category['id'] }}" method="post">
                                             @csrf
                                             @method('GET')
 
@@ -68,7 +71,7 @@
                                                 <a href="{{ route('categories.edit', $category['id']) }}"
                                                     class="btn btn-info me-1"><i class="fa fa-edit"></i></a>
 
-                                                <form action="http://127.0.0.1:8000/api/categories/{{ $category['id'] }}" method="post">
+                                                <form action="{{ config('app.backend_url') }}/api/categories/{{ $category['id'] }}" method="post">
                                                     @csrf
                                                     @method('DELETE')
 

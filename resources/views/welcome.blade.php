@@ -9,7 +9,7 @@
                 <div class="row p-2 bg-white border rounded">
                  <div class="col-md-3 mt-1">
                      @if ($product['image'])
-                        <img class="img-fluid img-responsive rounded product-image" src="http://127.0.0.1:8000/product-images/{{ $product['image'] }}" height="100" width="200">                                                
+                        <img class="img-fluid img-responsive rounded product-image" src="{{ config('app.backend_url') }}/product-images/{{ $product['image'] }}" height="100" width="200">                                                
                     @else
                         <small>No Image</small>
                     @endif

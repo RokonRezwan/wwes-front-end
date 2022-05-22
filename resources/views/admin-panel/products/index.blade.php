@@ -42,16 +42,19 @@
                                 </tr>
                             </thead>
                             <tbody>
+                                @php
+                                    $sl =1;
+                                @endphp
                                 @foreach ($products as $key => $product)
                                     <tr>
-                                        <td>{{ $key++ }}</td>
+                                        <td>{{ $sl++ }}</td>
                                         <td>{{ $product['name'] }}</td>
                                         <td class="text-center">
                                             {{ $product['category']['name'] }}
                                         </td>
                                         <td>
                                             @if ($product['image'])
-                                            <img src="http://127.0.0.1:8000/product-images/{{ $product['image'] }}"
+                                            <img src="{{ config('app.backend_url') }}/product-images/{{ $product['image'] }}"
                                             height="25" width="40">                                                
                                             @else
                                                 <small>No Image</small>
@@ -63,7 +66,7 @@
                                             @endforeach
                                         </td>
                                         <td class="text-center">
-                                            <form action="" method="post">
+                                            <form action="{{ config('app.backend_url') }}/api/products/toggle-status/{{ $product['id'] }}" method="post">
                                             @csrf
                                             @method('GET')
 
@@ -83,7 +86,7 @@
                                                 <a href="{{ route('products.edit', $product['id']) }}"
                                                     class="btn btn-info me-1"><i class="fa fa-edit"></i></a>
 
-                                                <form action="http://127.0.0.1:8000/api/products/{{ $product['id'] }}" method="post">
+                                                <form action="{{ config('app.backend_url') }}/api/products/{{ $product['id'] }}" method="post">
                                                     @csrf
                                                     @method('DELETE')
 

@@ -13,7 +13,7 @@
                 </div>
             </div>
 
-            <form method="post" action="http://127.0.0.1:8000/api/categories" enctype="multipart/form-data">
+            <form method="post" action="{{ config('app.backend_url') }}/api/categories" enctype="multipart/form-data">
                 @csrf
                 @method('POST')
 

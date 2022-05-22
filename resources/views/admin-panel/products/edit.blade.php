@@ -12,7 +12,7 @@
                 </div>
             </div>
 
-            <form method="post" action="http://127.0.0.1:8000/api/products/{{ $product['id'] }}" enctype="multipart/form-data">
+            <form method="post" action="{{ config('app.backend_url') }}/api/products/{{ $product['id'] }}" enctype="multipart/form-data">
                 @csrf
                 @method('PATCH')
 
@@ -61,9 +61,17 @@
 
                         <div class="row p-2">
                             <label for="image" class="col-md-2 col-form-label">Image</label>
-                            <div class="col-md-10">
+                            <div class="col-md-8">
                                 <input type="file" id="image" class="form-control" value="{{ old('image') }}"
                                     name="image" accept="image/*">                                
+                            </div>
+                            <div class="col-md-2">
+                                @if ($product['image'])
+                                <img src="{{ config('app.backend_url') }}/product-images/{{ $product['image'] }}"
+                                height="50" width="75">                                                
+                            @else
+                                <small>No Image</small>
+                            @endif
                             </div>
                         </div>
                         
@@ -98,7 +106,7 @@
                                 @empty
                                     <div class="row col-md-10" style="margin-bottom: 5px">
                                         <div class="col-md-4 col-12 g-0" style="padding-right:5px!important">
-                                            <select class="form-select" name="price_type_id[]" id="price_type_id">
+                                            <select class="form-select" name="price_type_new_id[]" id="price_type_new_id">
                                                 <option value="" selected>Select Price Type</option>
                                                 @foreach ($priceTypes as $ptype)
                                                 <option value="{{ $ptype['id'] }}">{{ $ptype['name'] }}</option>
@@ -107,8 +115,8 @@
                                         </div>
         
                                         <div class="col-12 col-md-4 g-0" style="padding-right:5px!important">
-                                            <input type="number" min="0" class="form-control" name="amount[]" id="amount" placeholder="Price"
-                                                    value="{{ old('amount[]') }}">
+                                            <input type="number" min="0" class="form-control" name="new_amount[]" id="new_amount" placeholder="Price"
+                                                    value="{{ old('new_amount[]') }}">
                                         </div>
         
                                         <div class="col-12 col-md-4 d-flex align-items-end g-0">
@@ -143,7 +151,7 @@
             <label for="category" class="col-md-2 col-form-label"></label>
             <div class="row col-md-10">
                 <div class="col-md-4 col-12 g-0" style="padding-right:5px!important">
-                    <select class="form-select" name="price_type_id[]" id="price_type_id">
+                    <select class="form-select" name="price_type_new_id[]" id="price_type_new_id">
                         <option value="" selected>Select Price Type</option>
                         @foreach ($priceTypes as $ptype)
                         <option value="{{ $ptype['id'] }}">{{ $ptype['name'] }}</option>
@@ -152,8 +160,8 @@
                 </div>
     
                 <div class="col-12 col-md-4 g-0" style="padding-right:5px!important">
-                    <input type="number" min="0" class="form-control" name="amount[]" id="amount" placeholder="Price"
-                            value="{{ old('amount[]') }}">
+                    <input type="number" min="0" class="form-control" name="new_amount[]" id="new_amount" placeholder="Price"
+                            value="{{ old('new_amount[]') }}">
                 </div>
     
                 <div class="col-md-2 col-12 d-flex align-items-end g-0">

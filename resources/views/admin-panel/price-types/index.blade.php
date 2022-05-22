@@ -39,16 +39,19 @@
                                 </tr>
                             </thead>
                             <tbody>
+                                @php
+                                    $sl =1;
+                                @endphp
                                 @foreach ($priceTypes as $key => $priceType)
                                     <tr>
                                         <td>
-                                            {{ $key++ }}
+                                            {{ $sl++ }}
                                         </td>
                                         <td>
                                             {{ $priceType['name'] }}
                                         </td>
                                         <td class="text-center">
-                                            <form action="" method="post">
+                                            <form action="{{ config('app.backend_url') }}/api/price-types/toggle-status/{{ $priceType['id'] }}" method="post">
                                             @csrf
                                             @method('GET')
 
@@ -68,15 +71,15 @@
                                                 <a href="{{ route('priceTypes.edit', $priceType['id']) }}"
                                                     class="btn btn-info me-1"><i class="fa fa-edit"></i></a>
 
-                                                <form action="http://127.0.0.1:8000/api/price-types/{{ $priceType['id'] }}" method="post">
+                                                <form action="{{ config('app.backend_url') }}/api/price-types/{{ $priceType['id'] }}" method="post">
                                                     @csrf
                                                     @method('DELETE')
 
                                                     <button type="submit" class="btn btn-danger"
                                                         onclick="return confirm('Are you sure you want to delete this Price Type ?')"><i
-                                                            class="fa fa-trash"></i></button>
+                                                            class="fa fa-trash"></i>
+                                                    </button>
                                                 </form>
-
                                             </div>
                                         </td>
                                     </tr>
