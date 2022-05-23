@@ -79,6 +79,21 @@
                             <label for="price" class="col-md-2 col-form-label">Price</label>
                             <div class="col-md-10">
 
+                                <div class="row g-0 d-flex align-items-end">
+                                    <div class="col-md-3 col-12 g-0" style="padding-right:5px!important">
+                                        <label for="price_type_id" class="form-label">Product Price Type</label>
+                                    </div>
+        
+                                    <div class="col-md-3 col-12 g-0" style="padding-right:5px!important">
+                                        <label for="price" class="form-label">Price</label>
+                                    </div>
+        
+                                    <div class="col-md-2 col-12 d-flex align-items-end g-0">
+                                        <a href="javascript:void(0)" class="btn btn-success addMore"><span class="glyphicon glyphicon glyphicon-plus"
+                                                aria-hidden="true"></span> Add More</a>
+                                    </div>
+                                </div>
+
                                 @forelse ($product['prices'] as $price)
                                     <input type="hidden" value="{{ $price['id'] }}" name="product_price_id[]" />
 
@@ -97,9 +112,9 @@
                                                     value="{{ $price['amount'] }}">
                                         </div>
         
-                                        <div class="col-12 col-md-4 d-flex align-items-end g-0">
-                                            <a href="javascript:void(0)" class="btn btn-success addMore"><span class="glyphicon glyphicon glyphicon-plus"
-                                                    aria-hidden="true"></span> Add More</a>
+                                        <div class="col-md-2 col-12 d-flex align-items-end g-0" style="margin-top:5px!important;">
+                                            <a href="javascript:void(0)" class="btn btn-danger deleteRecord" data-id="{{ $price['id'] }}"><span class="glyphicon glyphicon glyphicon-remove"
+                                                    aria-hidden="true"></span> Remove</a>
                                         </div>
         
                                     </div>
@@ -188,5 +203,26 @@
                     $(this).parents(".prices").remove();
                 });
         });
+
+        // Delete Price List Data
+        $('.deleteRecord').click(function() {
+            var price_id = $(this).data('id');
+            var token = $("meta[name='csrf-token']").attr("content");
+            $.ajax({
+                type: "POST",
+                dataType: "json",
+                cache: false,
+                url: "{{ config('app.backend_url') }}/api/product/price-list/"+price_id,
+                data: {'price_id': price_id , '_token': token,},
+                beforeSend:function(){
+                    return confirm("Are you sure want to delete this price ?");
+                },
+                success: function(data){
+                    $(".del_row" + price_id).remove();
+                    $("#successMessage").html(data.success).show().delay(3000).fadeOut(400);
+                }
+            });
+        })
+
     </script>
 @endpush

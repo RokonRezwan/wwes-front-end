@@ -58,7 +58,7 @@
                         </div>
 
                         <div class="row prices p-3">
-                            <label for="category" class="col-md-2 col-form-label">Price</label>
+                            <label for="price" class="col-md-2 col-form-label">Price</label>
                             <div class="row col-md-10">
                                 <div class="col-md-4 col-12 g-0" style="padding-right:5px!important">
                                     <select class="form-select" name="price_type_id[]" id="price_type_id">
